@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Space Mono";
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.product-button {
+  @apply w-auto h-auto p-1 rounded-lg text-center bg-secondary border-gray-600 border-4 active:scale-110 font-bold text-sm;
+}
+
+.shadow {
+  box-shadow: 5px 10px 5px 0px #4B5563;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="m-0 p-0 border-0">
+    <main
+      class="w-screen h-screen bg-gray-800 flex flex-col justify-center items-center space-y-4"
+    >
+      <h2 class="w-4/5 font-bold text-5xl text-start text-secondary">
+        Platzi Crud Api
+      </h2>
+      <section
+        class="w-4/5 h-auto p-3 flex space-x-3 rounded-2xl shadow-2xl bg-primary"
+      >
+        <div class="w-1/2 h-full flex flex-col">
+          <div class="w-full flex px-3 pt-3 space-x-1">
+            <button id="button" class="product-button">Create Product</button>
+            <button id="button" class="product-button">Update Product</button>
+            <button id="button" class="product-button">Delete Product</button>
+            <button id="button" class="product-button">Find One Product</button>
+          </div>
+
+          <div id="form" class="mt-1">
+            <div class="w-full h-full grid place-items-center p-4 space-y-4">
+              <h2 class="text-4xl text-secondary font-bold text-center">👨‍🚀Welcome Platzinauta💚</h2>
+              <p class="text-white">This is a short project maded by <a class="text-sky-400 font-medium underline hover:no-underline" href="https://twitter.com/puentes_pulido">@puentes_pulido</a>,you can;edit,delete,create,find your own and another products from the <a class="underline text-sky-400 font-medium hover:no-underline" href="https://fakeapi.platzi.com/">Platzi Fake Api</a>.Enjoy this project and if you want to contribute, push your changes in the <a href="/" class="text-sky-400 font-medium underline hover:no-underline">Repository</a>.</p>
+              <img src="/platzi-logo.png" alt="platzi-logo">
+            </div>
+          </div>
+        </div>
+        <!-- --- -->
+        <div class="w-1/2 h-full flex flex-col p-3">
+          <h2 class="w-full font-bold text-start text-white text-3xl">
+            Response:
+          </h2>
+          <div id="response"
+            class="w-full h-full bg-gray-800 border-gray-700 border-8 rounded-xl"
+          ></div>
+        </div>
+      </section>
+    </main>
+    <script src="./src/main.ts" type="module"></script>
+  </body>
+</html>
