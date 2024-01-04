@@ -1,8 +1,23 @@
 {
   "name": "platzi-api-crud",
   "private": true,
+  "author": {
+    "name": "Johan Puentes",
+    "url": "https://bitsbyseb.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SebastianPuentesPulido/platzi-api-client"
+  },
   "version": "1.0.0",
   "type": "module",
+  "keywords": [
+    "typescript",
+    "vite",
+    "rest",
+    "api"
+  ],
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

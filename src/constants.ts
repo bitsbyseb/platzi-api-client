@@ -12,6 +12,7 @@ export const createTemplate = `<form id="create" class="formProduct" action="" s
 <input style="border-radius: 15px;font-weight: bold; padding-left:10px;" placeholder="5" type="number" name="categoryId" id="categoryId">
 <br/>
 <label style="color: #0BEB89;font-weight: bold; font-size: x-large;" for="images">Images:</label>
+<p style="color:#0BEB89; font-size:15px">the urls from images must be separated between commas, like: <span style="color:white;font-weight:bold; font-size:15px">https://image.com</span>,<span style="color:white; font-weight:bold; font-size:15px">https://image.com</span>.</p>
 <input style="border-radius: 15px;font-weight: bold; padding-left:10px;" type="url" name="images" id="images">
 <br/>
 <button id="submit" class="product-button" style="width: 10rem; height: auto; align-self: center;">Submit</button>
@@ -41,6 +42,7 @@ export const updateTemplate = `<form id="update" class="formProduct" action="" s
 <input style="border-radius: 15px;font-weight: bold; padding-left:10px;" placeholder="5" type="number" name="categoryId" id="categoryId">
 <br/>
 <label style="color: #0BEB89;font-weight: bold; font-size: x-large;" for="images">Images:</label>
+<p style="color:#0BEB89; font-size:15px">the Urls from images must be separated between commas, like: <span style="color:white;font-weight:bold; font-size:15px">https://image.com</span>,<span style="color:white; font-weight:bold; font-size:15px">https://image.com</span>.</p>
 <input style="border-radius: 15px;font-weight: bold; padding-left:10px;" type="url" name="images" id="images">
 <br/>
 <button id="submit" class="product-button" style="width: 10rem; height: auto; align-self: center;">Submit</button>
