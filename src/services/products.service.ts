@@ -19,18 +19,12 @@ export const createProduct = async (data: createProductType) => {
         method: 'POST',
         body: JSON.stringify(data),
     });
-    const result = create.json();
+    const result = await create.json();
     return result;
 }
 
-export const deleteProduct = async (id:number) => {
+export const deleteProduct = async (id:number):Promise<boolean> => {
     const response = await fetch(`${urlTemplate}/${id}`,{
-        mode: "cors",
-        cache: "no-cache", 
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json"
-        },
         method: 'DELETE',
     });
     const data = Boolean(response);
@@ -38,13 +32,13 @@ export const deleteProduct = async (id:number) => {
 }
 
 export const updateProduct = async (id:number,attributes:updateProductType) => {
-    const reponse = await fetch(`${urlTemplate}/${id}`,{
+    const response = await fetch(`${urlTemplate}/${id}`,{
         headers: {
             "Content-Type": "application/json"
         },
         method: 'PUT',
         body: JSON.stringify(attributes),
     });
-    const data = reponse.json();
+    const data = response.json();
     return data;
 }

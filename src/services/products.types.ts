@@ -1,4 +1,5 @@
 interface Product {
+    id:number,
     title: string,
     price: number,
     description: string,
@@ -8,9 +9,9 @@ interface Product {
 
 export type formTypes = "create" | "delete" | "find" | "update";
 
-export interface createProductType extends Required<Readonly<Product>> {
+export interface createProductType extends Readonly<Required<Omit<Product,'id'>>> {
 
 }
 
-export interface updateProductType extends Partial<Product> {
+export interface updateProductType extends Partial<Omit<Product,"id">> {
 }

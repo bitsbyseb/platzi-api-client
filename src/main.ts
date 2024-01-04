@@ -2,7 +2,7 @@ import { createProduct, deleteProduct, findProduct, updateProduct } from './serv
 import { formTypes } from './services/products.types.ts';
 import { createTemplate, deleteTemplate, findOneTemplate, updateTemplate } from './constants.ts';
 
-// reponse html result
+// response html result
 const resContainer = document.getElementById('response') as HTMLDivElement;
 
 // form container
@@ -19,51 +19,53 @@ const handleEvent = () => {
   const form = document.querySelector('.formProduct') as HTMLDivElement;
 
   let id: string = form.id;
-  form?.addEventListener('submit', (e: Event) => {
+  form.addEventListener('submit', async (e: Event) => {
     e.preventDefault();
     switch (id) {
       case 'create':
-        createProduct({
+        let objProduct = {
           title: title?.value,
           description: description?.value,
-          price: Number(price.value),
-          categoryId: Number(categoryId.value),
-          images: [images?.value],
-        }).then(x => resContainer != null ?
-          resContainer.innerHTML = JSON.stringify(x)
-          : '');
+          price: parseInt(price?.value),
+          categoryId: parseInt(categoryId?.value),
+          images:images?.value.split(","),
+        };
+
+        const createdProduct = await createProduct({...objProduct});
+        resContainer.innerText = JSON.stringify(createdProduct);
         break;
       case 'find':
-        findProduct(Number(productId?.value))
-          .then(x => resContainer != null ?
-            resContainer.innerHTML = JSON.stringify(x)
-            : '');
+        const findedProduct = await findProduct(parseInt(productId?.value));
+        resContainer.innerText = JSON.stringify(findedProduct);
         break;
       case 'delete':
-        deleteProduct(Number(productId?.value))
-          .then(x => resContainer != null ?
-            resContainer.innerHTML = `${x}`
-            : '').catch(err => console.error(err));
+        const deleteRes = await deleteProduct(parseInt(productId?.value));
+        resContainer.innerText = `${deleteRes}`;
         break;
       case 'update':
-        let objProduct = {
+        let updateValues:any = {
           title: title.value,
           description: description.value,
-          price: Number(price.value),
-          categoryId: Number(categoryId.value),
-          images: [images.value],
+          price: parseInt(price.value),
+          categoryId: parseInt(categoryId.value),
+          images:images.value.split(","),
         };
-        let cleanObject = {}
+        let cleanObject:any = {};
 
-        for (const prop in objProduct) {
-          if (objProduct[prop as keyof object]) {
-            cleanObject[prop as keyof object] = objProduct[prop as keyof object];
+        for (let prop in updateValues) {
+          let value = updateValues[prop];
+          if (value !== '' && typeof value === 'string') {
+            cleanObject[prop] = value;
+          } else if (typeof value === 'object' && value.length > 0 && value[0] !== '') {
+            cleanObject[prop] = value;
+          } else if (typeof value === 'number' && !isNaN(value)) {
+            cleanObject[prop] = value;
           }
         }
-        updateProduct(Number(productId.value), cleanObject)
-          .then(x => resContainer != null ?
-            resContainer.innerText = `${x}`
-            : '').catch(err => console.error(err));
+
+        console.log(cleanObject);
+        const responseUpdate = await updateProduct(parseInt(productId.value), cleanObject);
+        resContainer.innerText = JSON.stringify(responseUpdate);
         break;
     }
   });
