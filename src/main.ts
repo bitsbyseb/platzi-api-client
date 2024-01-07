@@ -1,7 +1,6 @@
 import { createProduct, deleteProduct, findProduct, updateProduct } from './services/products.service.ts';
-import { formTypes } from './services/products.types.ts';
+import { formTypes , updateProductType , cleanObjectType, createProductType } from './services/products.types.ts';
 import { createTemplate, deleteTemplate, findOneTemplate, updateTemplate } from './constants.ts';
-
 // response html result
 const resContainer = document.getElementById('response') as HTMLDivElement;
 
@@ -23,7 +22,7 @@ const handleEvent = () => {
     e.preventDefault();
     switch (id) {
       case 'create':
-        let objProduct = {
+        let objProduct:createProductType = {
           title: title?.value,
           description: description?.value,
           price: parseInt(price?.value),
@@ -43,17 +42,17 @@ const handleEvent = () => {
         resContainer.innerText = `${deleteRes}`;
         break;
       case 'update':
-        let updateValues:any = {
+        let updateValues:updateProductType = {
           title: title.value,
           description: description.value,
           price: parseInt(price.value),
           categoryId: parseInt(categoryId.value),
           images:images.value.split(","),
         };
-        let cleanObject:any = {};
+        let cleanObject:cleanObjectType = {};
 
         for (let prop in updateValues) {
-          let value = updateValues[prop];
+          let value = updateValues[prop as keyof updateProductType];
           if (value !== '' && typeof value === 'string') {
             cleanObject[prop] = value;
           } else if (typeof value === 'object' && value.length > 0 && value[0] !== '') {
@@ -63,7 +62,7 @@ const handleEvent = () => {
           }
         }
 
-        console.log(cleanObject);
+        // console.log(cleanObject);
         const responseUpdate = await updateProduct(parseInt(productId.value), cleanObject);
         resContainer.innerText = JSON.stringify(responseUpdate);
         break;

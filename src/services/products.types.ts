@@ -15,3 +15,7 @@ export interface createProductType extends Readonly<Required<Omit<Product,'id'>>
 
 export interface updateProductType extends Partial<Omit<Product,"id">> {
 }
+
+export interface cleanObjectType extends updateProductType {
+    [index:string] : string | number | string[] | undefined;
+}
