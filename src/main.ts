@@ -92,7 +92,7 @@ const spawnForm = (action: formTypes) => {
   }
 }
 
-const buttons = document.querySelectorAll('#button');
+const buttons = document.querySelectorAll('.product-button');
 
 buttons.forEach(x => {
   x.addEventListener('click', (e) => {
