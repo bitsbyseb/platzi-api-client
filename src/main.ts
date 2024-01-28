@@ -1,6 +1,5 @@
 import { createProduct, deleteProduct, findProduct, updateProduct } from './services/products.service.ts';
 import { formTypes, updateProductType, cleanObjectType, createProductType } from './services/products.types.ts';
-// import { createTemplate, deleteTemplate, findOneTemplate, updateTemplate } from './constants.ts';
 import "./components/index.ts"
 // response html result
 const resContainer = document.getElementById('response') as HTMLDivElement;
@@ -9,14 +8,14 @@ const resContainer = document.getElementById('response') as HTMLDivElement;
 const formContainer = document.getElementById('form') as HTMLDivElement;
 
 const handleEvent = () => {
-  const title = document.querySelector("#form > update-template")?.shadowRoot?.querySelector("#product_id") as HTMLInputElement;
-  const price = document.getElementById('price') as HTMLInputElement;
-  const description = document.getElementById('description') as HTMLInputElement;
-  const categoryId = document.getElementById('categoryId') as HTMLInputElement;
-  const images = document.getElementById('images') as HTMLInputElement;
-  const productId = document.getElementById('product_id') as HTMLInputElement;
+  const form = document.querySelector("#form > *")?.shadowRoot?.querySelector(".formProduct");
+  const title = form?.querySelector('#title') as HTMLInputElement;
+  const price = form?.querySelector('#price') as HTMLInputElement;
+  const description = form?.querySelector('#description') as HTMLInputElement;
+  const categoryId = form?.querySelector('#categoryId') as HTMLInputElement;
+  const images = form?.querySelector('#images') as HTMLInputElement;
+  const productId = form?.querySelector('#product_id') as HTMLInputElement;
 
-  const form = document.querySelector("#form > create-template")?.shadowRoot?.querySelector("#create");
 
   if (form !== undefined && form !== null) {
     let id: string = form.id;
