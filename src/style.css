@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 .product-button {
   @apply w-auto h-auto p-1 rounded-lg text-center bg-secondary border-gray-600 border-4 active:scale-110 font-bold text-sm;
 }
