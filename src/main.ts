@@ -1,13 +1,38 @@
-import { createProduct, deleteProduct, findProduct, updateProduct } from './services/products.service.ts';
-import { formTypes, updateProductType, cleanObjectType, createProductType } from './services/products.types.ts';
+import { HttpService } from './services/products.service.ts';
+import { updateProductType, createProductType, Product } from './services/products.types.ts';
 import "./components/index.ts"
-// response html result
-const resContainer = document.getElementById('response') as HTMLDivElement;
 
-// form container
+const buttonsContainer = document.getElementById('buttonsContainer');
+const resContainer = document.getElementById('response') as HTMLDivElement;
 const formContainer = document.getElementById('form') as HTMLDivElement;
 
+const formTypes = ["create", "find", "delete", "update"];
+interface ProductParams {
+  title: string,
+  description: string,
+  price: number | string,
+  category: string,
+  images: string[]
+}
+
+function spawnComponent(props: ProductParams) {
+  resContainer.textContent = '';
+  resContainer.innerHTML = `
+  <product-element
+    title="${props.title}"
+    description="${props.description}"
+    images="${props.images.join(',')}"
+    price="${props.price}"
+    category="${props.category}"
+  ></product-element>
+  `
+}
+
+// httpService
+const platziService = new HttpService("https://api.escuelajs.co/api/v1/products");
+
 const handleEvent = () => {
+  // these elements are here cause' they doesn't always exists in the DOM,
   const form = document.querySelector("#form > *")?.shadowRoot?.querySelector(".formProduct");
   const title = form?.querySelector('#title') as HTMLInputElement;
   const price = form?.querySelector('#price') as HTMLInputElement;
@@ -18,7 +43,7 @@ const handleEvent = () => {
 
 
   if (form !== undefined && form !== null) {
-    let id: string = form.id;
+    let id = form.id;
     form.addEventListener('submit', async (e: Event) => {
       e.preventDefault();
       switch (id) {
@@ -30,16 +55,28 @@ const handleEvent = () => {
             categoryId: parseInt(categoryId?.value),
             images: images?.value.split(","),
           };
-  
-          const createdProduct = await createProduct({ ...objProduct });
-          resContainer.innerText = JSON.stringify(createdProduct);
+
+          const createdProduct = await platziService.createProduct<createProductType, Product>({ ...objProduct });
+          spawnComponent({
+            title: createdProduct.title,
+            price: createdProduct.price,
+            description: createdProduct.description,
+            images: createdProduct.images,
+            category: createdProduct.category.name,
+          });
           break;
         case 'find':
-          const findedProduct = await findProduct(parseInt(productId?.value));
-          resContainer.innerText = JSON.stringify(findedProduct);
+          const foundedProduct = await platziService.findProduct<Product>(parseInt(productId?.value));
+          spawnComponent({
+            title: foundedProduct.title,
+            price: foundedProduct.price,
+            description: foundedProduct.description,
+            images: foundedProduct.images,
+            category: foundedProduct.category.name,
+          });
           break;
         case 'delete':
-          const deleteRes = await deleteProduct(parseInt(productId?.value));
+          const deleteRes = await platziService.deleteProduct(parseInt(productId?.value));
           resContainer.innerText = `${deleteRes}`;
           break;
         case 'update':
@@ -50,70 +87,62 @@ const handleEvent = () => {
             categoryId: parseInt(categoryId.value),
             images: images.value.split(","),
           };
-          let cleanObject: cleanObjectType = {};
-  
+          let cleanObject: updateProductType = {};
+
           for (let prop in updateValues) {
-            let value = updateValues[prop as keyof updateProductType];
+            let value = updateValues[prop];
             if (value !== '' && typeof value === 'string') {
-              cleanObject[prop] = value;
+              Object.defineProperty(cleanObject, prop, {
+                value: value,
+              });
             } else if (typeof value === 'object' && value.length > 0 && value[0] !== '') {
-              cleanObject[prop] = value;
+              Object.defineProperty(cleanObject, prop, {
+                value: value,
+              });
             } else if (typeof value === 'number' && !isNaN(value)) {
-              cleanObject[prop] = value;
+              Object.defineProperty(cleanObject, prop, {
+                value: value,
+              });
             }
           }
-  
-          // console.log(cleanObject);
-          const responseUpdate = await updateProduct(parseInt(productId.value), cleanObject);
-          resContainer.innerText = JSON.stringify(responseUpdate);
+
+          console.log(cleanObject);
+          const responseUpdate = await platziService.updateProduct<updateProductType, Product>(parseInt(productId.value), cleanObject);
+          spawnComponent({
+            title: responseUpdate.title,
+            price: responseUpdate.price,
+            description: responseUpdate.description,
+            images: responseUpdate.images,
+            category: responseUpdate.category.name,
+          });
           break;
       }
     });
   }
-  
+
 };
 
-const spawnForm = (action: formTypes) => {
-  if (formContainer != null) {
-    formContainer.textContent = '';
-    switch (action) {
-      case 'create':
-        formContainer.appendChild(document.createElement('create-template'));
-        break;
-      case 'delete':
-        formContainer.appendChild(document.createElement('delete-template'));
-        break;
-      case 'find':
-        formContainer.appendChild(document.createElement('find-template'));
-        break;
-      case 'update':
-        formContainer.appendChild(document.createElement('update-template'));
-        break;
+const spawnForm = (action: string) => {
+  try {
+    if (formContainer != null) {
+      formContainer.textContent = '';
+      formContainer.appendChild(document.createElement(`${action}-template`));
+      handleEvent();
+    } else {
+      throw new Error('form element not found or deleted');
     }
-    handleEvent();
-  } else {
-    throw new Error('form element not found or deleted');
+  } catch (error) {
+    console.error(error);
   }
 }
 
-const buttons = document.querySelectorAll('.product-button');
-
-buttons.forEach(x => {
-  x.addEventListener('click', (e) => {
-    e.preventDefault();
-    switch (x.textContent) {
-      case "Create Product":
-        spawnForm('create');
-        break;
-      case "Update Product":
-        spawnForm('update');
-        break;
-      case "Find One Product":
-        spawnForm('find');
-        break;
-      case "Delete Product":
-        spawnForm('delete');
-        break;
+buttonsContainer?.addEventListener('click', (e) => {
+  e.preventDefault();
+  const elementId = (e.target as Element).id;
+  for (let form of formTypes) {
+    if (elementId === form) {
+      spawnForm(elementId);
+      break;
     }
-  })
-}); 
+  }
+});

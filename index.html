@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="A simple client for Platzi's fake api, create,read,delete and update your own products">
+    <meta
+      name="description"
+      content="A simple client for Platzi's fake api, create,read,delete and update your own products"
+    />
     <title>Vite + TS</title>
     <link rel="stylesheet" href="./src/style.css" />
   </head>
@@ -12,36 +15,66 @@
     <main
       class="w-screen min-h-screen max-lg:overflow-x-hidden bg-gray-800 py-8 max-sm:p-3 max-sm:grid flex flex-col justify-center items-center"
     >
-      <h2 class="w-4/5 max-sm:w-full font-bold text-5xl max-sm:text-center text-start mt-8 max-sm:mt-4 text-secondary">
+      <h2
+        class="w-4/5 max-sm:w-full font-bold text-5xl max-sm:text-center text-start mt-8 max-sm:mt-4 text-secondary"
+      >
         Platzi Crud Api
       </h2>
       <section
         class="w-4/5 h-auto p-3 flex space-x-3 max-sm:space-x-0 max-sm:w-full max-sm:flex-col rounded-2xl shadow-2xl bg-primary mb-8"
       >
         <div class="w-1/2 h-full flex flex-col max-sm:w-full">
-          <div class="w-full flex px-3 pt-3 space-x-1">
-            <button class="product-button">Create Product</button>
-            <button class="product-button">Update Product</button>
-            <button class="product-button">Delete Product</button>
-            <button class="product-button">Find One Product</button>
+          <div class="w-full flex px-3 pt-3 space-x-1" id="buttonsContainer">
+            <button id="create" class="product-button">Create Product</button>
+            <button id="update" class="product-button">Update Product</button>
+            <button id="delete" class="product-button">Delete Product</button>
+            <button id="find" class="product-button">Find One Product</button>
           </div>
 
           <div id="form" class="mt-1 max-sm:w-full">
             <div class="w-full h-full grid place-items-center p-4 space-y-4">
-              <h2 class="text-4xl text-secondary font-bold text-center">✍Welcome Platzinauta💚</h2>
-              <p class="text-white">This is a short project created by <a class="text-sky-400 font-medium underline hover:no-underline" href="https://twitter.com/puentes_pulido">@puentes_pulido</a>,you can;edit,delete,create,find your own and another products from the <a class="underline text-sky-400 font-medium hover:no-underline" href="https://fakeapi.platzi.com/">Platzi Fake Api</a>.Enjoy this project and if you want to contribute, push your changes in the <a href="/" class="text-sky-400 font-medium underline hover:no-underline">Repository</a>.</p>
-              <img width="192" height="192" src="/platzi-logo.png" alt="platzi-logo">
+              <h2 class="text-4xl text-secondary font-bold text-center">
+                ✍Welcome Platzinauta💚
+              </h2>
+              <p class="text-white">
+                This is a short project created by
+                <a
+                  class="text-sky-400 font-medium underline hover:no-underline"
+                  href="https://twitter.com/puentes_pulido"
+                  >@puentes_pulido</a
+                >,you can;edit,delete,create,find your own and another products
+                from the
+                <a
+                  class="underline text-sky-400 font-medium hover:no-underline"
+                  href="https://fakeapi.platzi.com/"
+                  >Platzi Fake Api</a
+                >.Enjoy this project and if you want to contribute, push your
+                changes in the
+                <a
+                  href="/"
+                  class="text-sky-400 font-medium underline hover:no-underline"
+                  >Repository</a
+                >.
+              </p>
+              <img
+                width="192"
+                height="192"
+                src="/platzi-logo.png"
+                alt="platzi-logo"
+              />
             </div>
           </div>
         </div>
         <!-- --- -->
-        <div class="w-1/2 h-full max-sm:w-full flex-col p-3 max-sm:p-0 items-center justify-center">
+        <div
+          class="w-1/2 h-full max-sm:w-full flex-col p-3 max-sm:p-0 items-center justify-center"
+        >
           <h2 class="w-full font-bold text-start text-white text-3xl">
             Response:
           </h2>
-          <div id="response"
-            class="w-full h-screen max-sm:w-80 max-sm:h-32 bg-gray-800 border-gray-700 border-8 rounded-xl text-clip overflow-x-scroll overflow-y-scroll"
-          ></div>
+          <div
+            id="response" class="w-full h-full flex items-center">
+          </div>
         </div>
       </section>
     </main>

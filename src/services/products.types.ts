@@ -1,21 +1,26 @@
-interface Product {
-    id:number,
-    title: string,
-    price: number,
-    description: string,
-    categoryId: number,
+export interface Product {
+    id: number
+    title: string
+    price: number
+    description: string
     images: string[]
+    creationAt: string
+    updatedAt: string
+    category: Category
+  }
+  
+  export interface Category {
+    id: number
+    name: string
+    image: string
+    creationAt: string
+    updatedAt: string
+  }
+
+
+export interface createProductType extends Readonly<Required<Omit<Product,'id' | 'category' | 'creationAt' | 'updatedAt'>>> {
+    categoryId:number
 }
-
-export type formTypes = "create" | "delete" | "find" | "update";
-
-export interface createProductType extends Readonly<Required<Omit<Product,'id'>>> {
-
-}
-
-export interface updateProductType extends Partial<Omit<Product,"id">> {
-}
-
-export interface cleanObjectType extends updateProductType {
-    [index:string] : string | number | string[] | undefined;
+export interface updateProductType extends Partial<createProductType> {
+    [index:string]:string | string[] | number | undefined | boolean
 }

@@ -1,13 +1,11 @@
-FROM node:21-alpine3.19
-
+FROM node:latest
+FROM nginx:latest
 WORKDIR /app
 
-COPY package*.json ./
-
-COPY . .
+COPY . /app/
 
 RUN npm install
 
-CMD [ "npm","run","preview-build"]
+CMD [ "npm","run","build"]
 
-EXPOSE 8080
+COPY /app/dist/ /usr/share/nginx/html

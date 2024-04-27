@@ -4,7 +4,7 @@ export default defineConfig({
   base:'/platzi-api-client/',
   build:{
     cssMinify:'esbuild',
-    minify:'esbuild',
+    minify:true,
   },
   server:{
     port:5050
