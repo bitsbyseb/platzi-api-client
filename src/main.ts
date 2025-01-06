@@ -34,15 +34,14 @@ const platziService = new HttpService("https://api.escuelajs.co/api/v1/products"
 const handleEvent = () => {
   // these elements are here cause' they doesn't always exists in the DOM,
   const form = document.querySelector("#form > *")?.shadowRoot?.querySelector(".formProduct");
-  const title = form?.querySelector('#title') as HTMLInputElement;
-  const price = form?.querySelector('#price') as HTMLInputElement;
-  const description = form?.querySelector('#description') as HTMLInputElement;
-  const categoryId = form?.querySelector('#categoryId') as HTMLInputElement;
-  const images = form?.querySelector('#images') as HTMLInputElement;
-  const productId = form?.querySelector('#product_id') as HTMLInputElement;
+  const title = form?.querySelector<HTMLInputElement>('#title') as HTMLInputElement;
+  const price = form?.querySelector<HTMLInputElement>('#price') as HTMLInputElement;
+  const description = form?.querySelector<HTMLInputElement>('#description') as HTMLInputElement;
+  const categoryId = form?.querySelector<HTMLInputElement>('#categoryId') as HTMLInputElement;
+  const images = form?.querySelector<HTMLInputElement>('#images') as HTMLInputElement;
+  const productId = form?.querySelector<HTMLInputElement>('#product_id') as HTMLInputElement;
 
-
-  if (form !== undefined && form !== null) {
+  if (form) {
     let id = form.id;
     form.addEventListener('submit', async (e: Event) => {
       e.preventDefault();
@@ -92,17 +91,11 @@ const handleEvent = () => {
           for (let prop in updateValues) {
             let value = updateValues[prop];
             if (value !== '' && typeof value === 'string') {
-              Object.defineProperty(cleanObject, prop, {
-                value: value,
-              });
-            } else if (typeof value === 'object' && value.length > 0 && value[0] !== '') {
-              Object.defineProperty(cleanObject, prop, {
-                value: value,
-              });
-            } else if (typeof value === 'number' && !isNaN(value)) {
-              Object.defineProperty(cleanObject, prop, {
-                value: value,
-              });
+              cleanObject[prop] = value;
+            } else if (Array.isArray(value) && value.length > 0 && value[0] !== '') {
+              cleanObject[prop] = value;
+            } else if (typeof value === 'number') {
+              cleanObject[prop] = value;
             }
           }
 
@@ -124,7 +117,7 @@ const handleEvent = () => {
 
 const spawnForm = (action: string) => {
   try {
-    if (formContainer != null) {
+    if (formContainer && formTypes.includes(action)) {
       formContainer.textContent = '';
       formContainer.appendChild(document.createElement(`${action}-template`));
       handleEvent();
@@ -139,10 +132,5 @@ const spawnForm = (action: string) => {
 buttonsContainer?.addEventListener('click', (e) => {
   e.preventDefault();
   const elementId = (e.target as Element).id;
-  for (let form of formTypes) {
-    if (elementId === form) {
-      spawnForm(elementId);
-      break;
-    }
-  }
+  spawnForm(elementId);
 });
