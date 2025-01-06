@@ -1,18 +1,17 @@
 export class HttpService {
     constructor(public url: string) { }
 
-    async findProduct<T>(id: number): Promise<T> {
+    async findProduct<ReturnType>(id: number): Promise<ReturnType> {
         const response = await fetch(`${this.url}/${id}`, {
             mode: "cors",
             cache: "no-cache",
             credentials: "same-origin",
             method: 'GET',
         });
-        const data = response.json();
-        return data;
+        return await response.json();
     }
 
-    async createProduct<T, K>(data: T): Promise<K> {
+    async createProduct<InputType, ReturnType>(data: InputType): Promise<ReturnType> {
         const response = await fetch(this.url, {
             mode: "cors",
             cache: "no-cache",
@@ -23,8 +22,7 @@ export class HttpService {
             method: 'POST',
             body: JSON.stringify(data),
         });
-        const result = await response.json();
-        return result;
+        return await response.json();
     }
 
     async deleteProduct(id: number): Promise<boolean> {
@@ -37,7 +35,7 @@ export class HttpService {
         return response.ok ? true : false;
     }
 
-    async updateProduct<T, K>(id: number, attributes: T): Promise<K> {
+    async updateProduct<InputType,ReturnType>(id: number, attributes: InputType): Promise<ReturnType> {
         const response = await fetch(`${this.url}/${id}`, {
             headers: {
                 "Content-Type": "application/json"
@@ -48,7 +46,6 @@ export class HttpService {
             method: 'PUT',
             body: JSON.stringify(attributes),
         });
-        const data = await response.json();
-        return data;
+        return await response.json();
     }
 }

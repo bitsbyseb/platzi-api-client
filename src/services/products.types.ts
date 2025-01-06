@@ -22,5 +22,5 @@ export interface createProductType extends Readonly<Required<Omit<Product,'id' |
     categoryId:number
 }
 export interface updateProductType extends Partial<createProductType> {
-    [index:string]:string | string[] | number | undefined | boolean
+    [index:string]:unknown
 }
